@@ -1,8 +1,11 @@
-import { takeEvery } from "redux-saga/effects"
+import { takeEvery,put } from "redux-saga/effects"
 import { typeCart } from "./constants"
 
 function* getProducts() {
-    console.warn("Get products")
+     let data = yield fetch('http://localhost:3000/products');
+        data = yield data.json();
+    console.warn("Get products_saga", data) 
+    yield put({type: typeCart.SET_PRODUCT_LIST, data})
 }
 
 function* productSaga() {

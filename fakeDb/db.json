@@ -1,0 +1,31 @@
+{
+    "products": [
+      {
+        "id": 1,
+        "name": "iphone 12",
+        "color": "black",
+        "price": "",
+        "category": "mobile",
+        "brand": "apple",
+        "photo": "https://ik.imagekit.io/3dqckpw4d/upload/iphone_12___Black1657182277iphone-12-black.png"
+      },
+      {
+        "id": 2,
+        "name": "iphone 12",
+        "color": "black",
+        "price": "",
+        "category": "mobile",
+        "brand": "apple",
+        "photo": "https://ik.imagekit.io/3dqckpw4d/upload/iphone_12___Black1657182277iphone-12-black.png"
+      },
+      {
+        "id": 3,
+        "name": "iphone 12",
+        "color": "black",
+        "price": "",
+        "category": "mobile",
+        "brand": "apple",
+        "photo": "https://ik.imagekit.io/3dqckpw4d/upload/iphone_12___Black1657182277iphone-12-black.png"
+      }
+    ]
+  }

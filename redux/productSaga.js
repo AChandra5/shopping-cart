@@ -8,8 +8,20 @@ function* getProducts() {
     yield put({type: typeCart.SET_PRODUCT_LIST, data})
 }
 
+function* addProductToCart(action) {
+    console.log("actionPayload", action)
+    yield put({type: typeCart.ADD_TO_CART, payload: action.payload} )
+}
+
+function* removeFromCartAction(action) {
+    yield put ({type: typeCart.REMOVE_FROM_CART, removePayload: action.payload})
+}
+
 function* productSaga() {
-    yield takeEvery(typeCart.PRODUCT_LIST, getProducts)
+    yield takeEvery(typeCart.PRODUCT_LIST, getProducts);
+    yield takeEvery(typeCart.ADD_TO_CART_ACTION, addProductToCart);
+    yield takeEvery(typeCart.REMOVE_FROM_CART_ACTION, removeFromCartAction);
+
 }
 
 export default productSaga

@@ -2,11 +2,23 @@ import { typeCart } from "./constants";
 
 
 export const productAction = () => {
-   
-   let data = "a for apple and b for ball"
-        // console.warn("product Action is called", data);
         return {
             type: typeCart.PRODUCT_LIST,
-            data
         }
 } 
+
+export const addToCartAction = (item: any) => {
+    console.log("add  to cart action triggered from action", item)
+    return {
+        type: typeCart.ADD_TO_CART_ACTION,
+        payload: item
+    }
+}
+
+export const removeFromCartAction = (item: any) => {
+    console.log("remove from cart action triggered from action")
+    return {
+        type: typeCart.REMOVE_FROM_CART_ACTION,
+        payload: item
+    }
+}

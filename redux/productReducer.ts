@@ -9,10 +9,6 @@ const initialState = {
 export const productDataReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case typeCart.SET_PRODUCT_LIST:
-      console.log(
-        { ...state, products: action.data || state.products },
-        "action"
-      );
       return {
         ...state,
         products: action.data || state.products,
@@ -21,21 +17,24 @@ export const productDataReducer = (state = initialState, action: any) => {
     case typeCart.ADD_TO_CART:
       let cart = [];
       cart.push(action?.payload);
-      console.log("Cart", cart);
       return {
         ...state,
         cart: [...state.cart, action.payload],
       };
 
     case typeCart.REMOVE_FROM_CART:
-        console.log("removeaction",action )
-        let removeItem = action?.removePayload
-        console.log("removeItem", removeItem)
-        const newCart = state.cart.filter((item: any)=> item.id !== removeItem.id)
-        console.log("cart after removed", {...state, cart: [...newCart]})
-        return {
-            ...state, cart: [...newCart]
-        }
+
+      const removeItem = action.removePayload;
+      const indexToBeRemoved = state?.cart?.indexOf(removeItem);
+      const currentcart = [...state?.cart];
+      if(indexToBeRemoved !== -1) {
+        currentcart.splice(indexToBeRemoved, 1);
+      }
+      return {
+        ...state,
+        cart: currentcart,
+        removeItems: removeItem
+      };
     default:
       return state;
   }

@@ -1,6 +1,10 @@
 import { combineReducers } from "redux";
 import { productDataReducer } from "./productReducer";
 
-export default combineReducers({
+const rootReducer = combineReducers({
     productDataReducer
 })
+
+
+export type RootState = ReturnType<typeof rootReducer>;
+export default rootReducer;

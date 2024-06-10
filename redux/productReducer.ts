@@ -1,12 +1,27 @@
 import { typeCart } from "./constants";
+import {InitialState, Product, ProductAction} from './types'
+import { createTransform } from 'redux-persist';
 
-const initialState = {
+console.log("createTransform", createTransform)
+
+const initialState: InitialState = {
   products: [],
-  cart: [],
-  removeItems: [],
+  cart:  [],
+  removeItems: {
+    id: "",
+    name: "",
+    color: "",
+    price: "",
+    category: "",
+    brand: "",
+    photo: "",
+  },
 };
 
-export const productDataReducer = (state = initialState, action: any) => {
+export const productDataReducer = (state = initialState, action: ProductAction) => {
+  console.log("Action", action);
+  console.log("State", state?.cart);
+
   switch (action.type) {
     case typeCart.SET_PRODUCT_LIST:
       return {
@@ -23,17 +38,17 @@ export const productDataReducer = (state = initialState, action: any) => {
       };
 
     case typeCart.REMOVE_FROM_CART:
-
-      const removeItem = action.removePayload;
-      const indexToBeRemoved = state?.cart?.indexOf(removeItem);
+      const removeItem: Product = action.payload;
+      const indexToBeRemoved: any = state?.cart?.indexOf(removeItem);
       const currentcart = [...state?.cart];
-      if(indexToBeRemoved !== -1) {
+      if (indexToBeRemoved !== -1) {
         currentcart.splice(indexToBeRemoved, 1);
       }
+      // debugger
       return {
         ...state,
         cart: currentcart,
-        removeItems: removeItem
+        removeItems: removeItem,
       };
     default:
       return state;

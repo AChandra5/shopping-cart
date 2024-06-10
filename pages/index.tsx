@@ -8,8 +8,9 @@ import {
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { SnackbarProvider, useSnackbar } from "notistack";
-
+import { Product } from '../redux/types';
 import styled from "@emotion/styled";
+import { RootState, AppDispatch } from "../redux/store";
 
 const Wrapper = styled.div`
   min-height: 90vh;
@@ -20,26 +21,17 @@ const Wrapper = styled.div`
   }
 `;
 
-interface Product {
-  id: string;
-  name: string;
-  color: string;
-  price: string;
-  category: string;
-  brand: string;
-  photo: string;
-}
-
 const Initial = () => {
   const dispatch = useDispatch();
+  // const dispatch: AppDispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const data: any = useSelector((state: any) => state?.productDataReducer);
   // const products = allData?.productDataReducer
   const [products, setProducts] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
   const [removeProducts, setRemoveProducts] = useState([]);
-
-  const [display, setDisplay] = useState(false);
+  console.log("removeProducts", removeProducts);
+  console.log("cartProducts", cartProducts);
 
   useEffect(() => {
     dispatch(productAction());
@@ -49,15 +41,9 @@ const Initial = () => {
   useEffect(() => {
     if (data?.products) setProducts(data?.products); // Update products state after data is fetched
     if (data?.cart) setCartProducts(data?.cart);
-    if (data?.removeItems) {
-      setRemoveProducts(data?.removeItems);
-    }
-  }, [data]);
+    if (data?.removeItems) setRemoveProducts(data?.removeItems);
 
-  const productDisplay = () => {
-    dispatch(productAction());
-    setDisplay(true);
-  };
+  }, [data]);
 
   //dispatch add to cart action
   const addToCart = (item: any) => {
@@ -71,11 +57,13 @@ const Initial = () => {
 
   //dispatch remove from cart action
   const removeFromCart = (item: any) => {
-    dispatch(removeFromCartAction(item));
-    if (removeProducts == item) {
+    console.log("item", item);
+    if (cartProducts.some((cartItem: any) => cartItem.id === item.id)) {
+      dispatch(removeFromCartAction(item));
       enqueueSnackbar("removed item succesfully", {
         variant: "success",
       });
+      setRemoveProducts([]);
     } else {
       enqueueSnackbar("Product not added to cart yet", {
         variant: "error",
@@ -84,7 +72,7 @@ const Initial = () => {
   };
 
   const getProductCount = (product: Product): number => {
-    return cartProducts.filter((item) => item.id === product.id).length;
+    return cartProducts.filter((item: any) => item.id === product.id).length;
   };
 
   return (

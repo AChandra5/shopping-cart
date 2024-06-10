@@ -14,7 +14,7 @@ function* addProductToCart(action) {
 }
 
 function* removeFromCartAction(action) {
-    yield put ({type: typeCart.REMOVE_FROM_CART, removePayload: action.payload})
+    yield put ({type: typeCart.REMOVE_FROM_CART, payload: action.payload})
 }
 
 function* productSaga() {

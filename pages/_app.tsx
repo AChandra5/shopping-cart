@@ -1,26 +1,26 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { store } from "../redux/store";
-import { SnackbarProvider, useSnackbar } from 'notistack'
+import { persistor, store } from "../redux/store";
+import { SnackbarProvider } from "notistack";
+import { PersistGate } from "redux-persist/integration/react";
 
-interface Props{
- Component: React.FC;
- pageProps: Record<string, unknown>; // Interface for unknown page props
-
+interface Props {
+  Component: React.FC;
+  pageProps: Record<string, unknown>; // Interface for unknown page props
 }
 
 console.log("store", store);
 
-function MyApp({Component, pageProps}:Props) {
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar()
-
-    return(
-        <SnackbarProvider>
-        <Provider store={store}>
-        <Component  {...pageProps} />
-        </Provider>
-        </SnackbarProvider>
-    )
+function MyApp({ Component, pageProps }: Props) {
+  return (
+    <SnackbarProvider>
+      <Provider store={store}>
+        <PersistGate loading={"loading..."} persistor={persistor}>
+          <Component {...pageProps} />
+        </PersistGate>
+      </Provider>
+    </SnackbarProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;
